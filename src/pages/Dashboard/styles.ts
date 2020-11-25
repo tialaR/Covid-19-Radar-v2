@@ -13,5 +13,5 @@ export const StatesReportList = styled(
 ).attrs({
   contentContainerStyle: { paddingBottom: 40 },
 })`
-  padding: 20px 0 32px;
+  padding: 40px 0 32px;
 `;

@@ -51,7 +51,7 @@ const LineChartComponent = ({ chartList, bottomList }: any) => {
         style={{ marginHorizontal: -10 }}
         data={bottomList}
         formatLabel={(index: number) => bottomList[index]}
-        svg={{ fontSize: 9, fill: colors.white }}
+        svg={{ fontSize: 9, fill: colors.gray }}
         contentInset={{ left: 12, right: 12 }}
       />
     </View>

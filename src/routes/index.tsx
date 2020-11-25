@@ -85,7 +85,7 @@ const TabsRoutes = () => {
         initialRouteName="Estados"
         tabBarOptions={{
           activeTintColor: colors.primary,
-          inactiveTintColor: colors.secondary,
+          inactiveTintColor: colors.whiteLight,
           style: {
             borderTopWidth: 0,
             borderTopColor: 'transparent',

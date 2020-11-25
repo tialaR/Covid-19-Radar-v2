@@ -3,6 +3,7 @@ import ReportCard from '../../components/ReportCard';
 import { parseISO, format } from 'date-fns';
 import { ReportContext } from '../../ReportContext';
 import { Container, StatesReportList } from './styles';
+import SectionTitle from '../../components/SectionTitle';
 
 export interface StateReport {
     uid: number;
@@ -33,6 +34,12 @@ const Dashboard: React.FC = () => {
             <StatesReportList
                 data={reportContext.reports}
                 keyExtractor={stateReport => String(stateReport.uid)}
+                ListHeaderComponent={(
+                    <SectionTitle
+                      title="Lista dos estados"
+                      sectionTitleStyles={{ marginLeft: 24 }}
+                    />
+                )}
                 renderItem={({ item: stateReport }) => (
                     <ReportCard 
                         uf={stateReport.uf}

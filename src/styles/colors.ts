@@ -1,5 +1,6 @@
 export const colors = {
     white: 'rgba(255, 255, 255, 0.7)',
+    whiteLight: 'rgba(255, 255, 255, 0.2)',
     gray: '#757575',
     surface: '#212121',
     shadow: 'rgba(255,255,255,0.1)',
