@@ -34,6 +34,11 @@ interface StateReport {
   datetime: string;
 }
 
+interface StateReportCrowd {
+  state: string;
+  death: number;
+}
+
 const LogoTitle = () => {
   return (
     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -57,13 +62,15 @@ const TabsRoutes = () => {
   const [cases, setCases] = useState<Array<Number>>([]);
   const [deaths, setDeaths] = useState<Array<Number>>([]);
   const [suspects, setSuspects] = useState<Array<Number>>([]);
+
   const [currentDate, setCurrentDate] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
+  const [reportsCrowd, setReportsCrowd] = useState<Array<StateReportCrowd>>([]);
+
   useEffect(() => {
     loadReport();
-    loadCrowd();
   }, []);
 
   const loadReport = useCallback(async () => {
@@ -72,6 +79,7 @@ const TabsRoutes = () => {
 
       try {
         const response = await api.get('report/v1'); 
+        loadCrowd();
 
         let ufsAux: Array<String> = [];
         let casesAux: Array<Number> = [];
@@ -100,14 +108,14 @@ const TabsRoutes = () => {
   const loadCrowd = useCallback(async () => {
     try {
       const response = await apiCrowd.get('/case');
-      //console.warn(response);
+      setReportsCrowd(response.data);
     } catch (err) {
-      //console.warn(err.message);
+      console.warn(err.message);
     }
-  }, []);
+  }, [setReportsCrowd]);
 
   return (
-    <ReportContext.Provider value={{reports, ufs, cases, deaths, suspects, currentDate}}>
+    <ReportContext.Provider value={{reports, ufs, cases, deaths, suspects, currentDate, reportsCrowd}}>
       {loading && !error && <Loading />}
 
       {!loading && error && 

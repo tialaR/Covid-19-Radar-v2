@@ -11,6 +11,11 @@ interface StateReport {
     datetime: string;
 }
 
+interface StateReportCrowd {
+    state: string;
+    death: number;
+}
+
 interface ContextReport {
     reports: Array<StateReport>;
     ufs: Array<String>;
@@ -18,6 +23,7 @@ interface ContextReport {
     deaths: Array<Number>;
     suspects: Array<Number>;
     currentDate: string;
+    reportsCrowd: Array<StateReportCrowd>;
 }
 
 export const ReportContext = createContext({} as ContextReport);

@@ -17,7 +17,9 @@ export const RadioContainer = styled.TouchableOpacity<RadioContainerProps>`
     padding: 6px 15px;
     border-radius: 10px;
     margin-right:  ${props => props.first ? 14 : 0}px;
-    background-color: ${props => props.status === 'checked' ? colors.primary : colors.surface};
+    background-color: ${
+        props => props.status === 'checked' ? colors.primary : colors.surface
+    };
 `;
 
 export const RadioText = styled.Text<RadioContainerProps>`

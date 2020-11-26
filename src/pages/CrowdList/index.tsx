@@ -17,10 +17,10 @@ const CrowdList: React.FC = () => {
         <Container>
             <StatesReportList
                 data={reportContext.reports}
-                keyExtractor={stateReport => String(stateReport.uid)}
+                keyExtractor={stateReport => String(stateReport.uf)}
                 ListHeaderComponent={(
                     <SectionTitle
-                      title="Lista dos estados do crowd"
+                      title={"Lista dos estados do crowd"}
                       sectionTitleStyles={{ marginLeft: 24 }}
                     />
                 )}
