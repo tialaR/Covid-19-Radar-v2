@@ -4,8 +4,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 import React, { useEffect, useCallback, useState } from 'react';
 import { ReportContext } from '../ReportContext';
 import { HeaderImage, HeaderTitle } from '../styles/styles';
+import ErrorMessage from '../components/ErrorMessage';
 
-import { Platform, View } from 'react-native';
+import { ActivityIndicator, Platform, View } from 'react-native';
 import { colors } from '../styles/colors';
 
 import Dashboard from '../pages/Dashboard';
@@ -40,6 +41,14 @@ const LogoTitle = () => {
   );
 }
 
+const Loading = () => {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: colors.background }}>
+      <ActivityIndicator size='large' color={colors.primary} />
+    </View>
+  );
+}
+
 const TabsRoutes = () => {
   const [reports, setReports] = useState<Array<StateReport>>([]);
   const [ufs, setUfs] = useState<Array<String>>([]);
@@ -47,12 +56,17 @@ const TabsRoutes = () => {
   const [deaths, setDeaths] = useState<Array<Number>>([]);
   const [suspects, setSuspects] = useState<Array<Number>>([]);
   const [currentDate, setCurrentDate] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     loadReport();
   }, []);
 
   const loadReport = useCallback(async () => {
+      setLoading(true);
+      setError(false);
+
       try {
         const response = await api.get('report/v1'); 
 
@@ -75,71 +89,85 @@ const TabsRoutes = () => {
 
         setReports(response.data.data);
       } catch (err) {
-          console.warn(err);
+          setError(true);
       }
-  }, [setUfs, setCases, setDeaths, setReports]);
+      setLoading(false);
+  }, [setUfs, setCases, setDeaths, setReports, setError, setLoading]);
 
   return (
     <ReportContext.Provider value={{reports, ufs, cases, deaths, suspects, currentDate}}>
-      <Tab.Navigator
-        initialRouteName="Estados"
-        tabBarOptions={{
-          activeTintColor: colors.primary,
-          inactiveTintColor: colors.whiteLight,
-          style: {
-            borderTopWidth: 0,
-            borderTopColor: 'transparent',
-            backgroundColor: colors.background,
-            shadowColor: colors.shadow,
-            ...Platform.select({
-              ios: {
-                shadowOffset: { height: 2, width: 0 },
-                shadowOpacity: 0.5,
-                shadowRadius: 20,
-              },
-              android: {
-                elevation: 6,
-              },
-            }),
-          },
-        }}
-      >
-      {/* Fluxo da lista dos estados */}
-        <Tab.Screen
-          name="Dashboard"
-          component={Dashboard}
-          options={{
-            tabBarLabel: 'Estados',
-            tabBarIcon: ({ color }: TabBarIconProps) => (
-              <Icon name="view-list" color={color} size={22} />
-            ),
-          }}
-        />
+      {loading && !error && <Loading />}
 
-      {/* Fluxo dos gráficos */}
-        <Tab.Screen
-          name="Graphics"
-          component={Graphics}
-          options={{
-            tabBarLabel: 'Indicadores',
-            tabBarIcon: ({ color }: TabBarIconProps) => (
-              <Icon name="show-chart" color={color} size={22} />
-            ),
-          }}
+      {!loading && error && 
+        <ErrorMessage
+          errorMessage='Erro ao tentar carregar a lista dos estados.'
+          onTryAgainPress={() => loadReport()}
         />
+      }
+      
+      {!loading && !error &&
+          <>
+            <Tab.Navigator
+              initialRouteName="Estados"
+              tabBarOptions={{
+                activeTintColor: colors.primary,
+                inactiveTintColor: colors.whiteLight,
+                style: {
+                  borderTopWidth: 0,
+                  borderTopColor: 'transparent',
+                  backgroundColor: colors.background,
+                  shadowColor: colors.shadow,
+                  ...Platform.select({
+                    ios: {
+                      shadowOffset: { height: 2, width: 0 },
+                      shadowOpacity: 0.5,
+                      shadowRadius: 20,
+                    },
+                    android: {
+                      elevation: 6,
+                    },
+                  }),
+                },
+              }}
+            >
+            {/* Fluxo da lista dos estados */}
+              <Tab.Screen
+                name="Dashboard"
+                component={Dashboard}
+                options={{
+                  tabBarLabel: 'Estados',
+                  tabBarIcon: ({ color }: TabBarIconProps) => (
+                    <Icon name="view-list" color={color} size={22} />
+                  ),
+                }}
+              />
 
-      {/* Fluxo do crowd */}
-        <Tab.Screen
-          name="Crowd"
-          component={Crowd}
-          options={{
-            tabBarLabel: 'Crowd',
-            tabBarIcon: ({ color }: TabBarIconProps) => (
-              <Icon name="groups" color={color} size={22} />
-            ),
-          }}
-        />
-      </Tab.Navigator>
+            {/* Fluxo dos gráficos */}
+              <Tab.Screen
+                name="Graphics"
+                component={Graphics}
+                options={{
+                  tabBarLabel: 'Indicadores',
+                  tabBarIcon: ({ color }: TabBarIconProps) => (
+                    <Icon name="show-chart" color={color} size={22} />
+                  ),
+                }}
+              />
+
+            {/* Fluxo do crowd */}
+              <Tab.Screen
+                name="Crowd"
+                component={Crowd}
+                options={{
+                  tabBarLabel: 'Crowd',
+                  tabBarIcon: ({ color }: TabBarIconProps) => (
+                    <Icon name="groups" color={color} size={22} />
+                  ),
+                }}
+              />
+            </Tab.Navigator>
+          </>
+        }
     </ReportContext.Provider>
   );
 };

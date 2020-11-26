@@ -1,7 +1,9 @@
 import styled from 'styled-components/native';
 import { colors } from '../../styles/colors';
 
-export const Container = styled.ScrollView`
+export const Container = styled.ScrollView.attrs({
+    contentContainerStyle: { paddingBottom: 60 },
+})`
     flex-grow: 1;
     background-color: ${colors.background};
     padding: 20px 32px;
