@@ -11,7 +11,8 @@ import { colors } from '../styles/colors';
 
 import Dashboard from '../pages/Dashboard';
 import Crowd from '../pages/Crowd';
-import Graphics from '../pages/Graphics';
+import CrowdList from '../pages/CrowdList';
+//import Graphics from '../pages/Graphics';
 import api from '../service/api';
 
 const Tab = createBottomTabNavigator();
@@ -142,7 +143,20 @@ const TabsRoutes = () => {
                 }}
               />
 
+              {/* Fluxo da lista dos estados do crowd*/}
+              <Tab.Screen
+                name="CrowdList"
+                component={CrowdList}
+                options={{
+                  tabBarLabel: 'Crowd Lista',
+                  tabBarIcon: ({ color }: TabBarIconProps) => (
+                    <Icon name="list-alt" color={color} size={22} />
+                  ),
+                }}
+              />
+
             {/* Fluxo dos gráficos */}
+            {/*
               <Tab.Screen
                 name="Graphics"
                 component={Graphics}
@@ -153,13 +167,14 @@ const TabsRoutes = () => {
                   ),
                 }}
               />
-
+            */}
+            
             {/* Fluxo do crowd */}
               <Tab.Screen
                 name="Crowd"
                 component={Crowd}
                 options={{
-                  tabBarLabel: 'Crowd',
+                  tabBarLabel: 'Crowd Registro',
                   tabBarIcon: ({ color }: TabBarIconProps) => (
                     <Icon name="groups" color={color} size={22} />
                   ),
