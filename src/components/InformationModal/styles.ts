@@ -7,12 +7,12 @@ const modalWidth = width - 80;
 
 export const Overlay = styled.View`
   position: absolute;
-  background-color: ${colors.white};
+  background-color: ${colors.whiteLight};
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
-  opacity: 0.4;
+  opacity: 0.8;
 `;
 
 export const OutsideAreaButton = styled.TouchableWithoutFeedback``;
@@ -28,7 +28,7 @@ export const InformationContainer = styled.View`
   width: ${modalWidth}px;
   align-items: center;
   justify-content: center;
-  background-color: ${colors.background};
+  background-color: ${colors.surface};
   border-radius: 10px;
   box-shadow: 0px 10px 14px ${colors.shadow};
   elevation: 4;
@@ -44,7 +44,7 @@ export const Title = styled.Text`
 
 export const Information = styled.Text`
   font-size: 15px;
-  color: ${colors.tertiary};
+  color: ${colors.white};
   text-align: center;
   padding-top: 20px;
 `;

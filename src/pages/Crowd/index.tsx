@@ -13,6 +13,7 @@ import SelectStateList from '../../components/SelectStateList';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 import getValidationErrors from '../../utils/getValidationErros';
+import SelectDate from '../../components/SelectDate';
 import { Container, ContainerRowSelects, SelectStateListAux } from './styles';
 
 
@@ -55,11 +56,7 @@ const Crowd: React.FC = () => {
 
   const handleInformationModalClose = useCallback(() => {
     setShowInformationModal(false);
-
-    if (informationFeedback.status === 'success') {
-      navigation.goBack();
-    }
-  }, [setShowInformationModal, navigation, informationFeedback]);
+  }, [setShowInformationModal]);
 
   const handleRegister = useCallback(
     async (data: FormData) => {
@@ -81,8 +78,8 @@ const Crowd: React.FC = () => {
         feedbackTryUpdated({
           status: 'success',
           color: colors.primary,
-          icon: 'check',
-          message: 'Registro realizado com sucesso.',
+          icon: 'done',
+          message: 'Registro realizado com sucesso!',
         });
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
@@ -95,9 +92,9 @@ const Crowd: React.FC = () => {
         feedbackTryUpdated({
           status: 'error',
           color: colors.primary,
-          icon: 'alert-triangle',
+          icon: 'error-outline',
           message:
-            'Ocorreu um erro ao atualizar o perfil do usuário, tente novamente.',
+            'Ocorreu um erro ao realizar o registro, tente novamente.',
         });
       }
     },
@@ -145,6 +142,10 @@ const Crowd: React.FC = () => {
                 onRadioSelect={(choice: string) => console.warn(choice)}
               />
             </ContainerRowSelects>
+
+            <SelectDate
+              onSelectDate={(date: string) => console.warn(date)}
+            />
             
             <Button onPress={() => formRef.current?.submitForm()}>
               Registrar

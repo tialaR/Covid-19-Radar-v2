@@ -35,7 +35,6 @@ export const ModalContainer = styled.View`
   box-shadow: 0px 10px 14px ${colors.shadow};
   elevation: 4;
   position: absolute;
-  width: 140px;
   height: 300px;
   padding-bottom: 20px;
 `;

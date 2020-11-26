@@ -51,7 +51,7 @@ export default class SelectStateList extends PureComponent<Props, State> {
     {
       this.containerRef &&
         this.containerRef.measureInWindow((x, y, width, height) => {
-          this.setState({ modalVisible: true, x, y: y + 55, height });
+          this.setState({ modalVisible: true, x, y: y + 50, height });
         });
     }
   };
@@ -93,7 +93,7 @@ export default class SelectStateList extends PureComponent<Props, State> {
             >
               <TouchableWithoutFeedback onPress={this.hideModal}>
                 <ModalBackgroundScreen>
-                  <ModalContainer style={{ top: y, left: x, width: 190 }}>
+                  <ModalContainer style={{ top: y, left: x, width: 178 }}>
                     <FlatList
                       data={list}
                       style={{ flex: 1 }}
