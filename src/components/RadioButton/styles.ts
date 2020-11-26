@@ -4,6 +4,7 @@ import { colors } from '../../styles/colors';
 interface RadioContainerProps {
     status: 'checked' | 'unchecked';
     first?: boolean;
+    selectDefault?: boolean;
 }
 
 export const Container = styled.View`

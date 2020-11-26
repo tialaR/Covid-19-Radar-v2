@@ -4,11 +4,12 @@ import { Container, RadioContainer, RadioText } from './styles';
 interface RadioButtonProps {
     textOne: string;
     textTwo: string;
+    selectDefault?: boolean;
     onRadioSelect: (value: string) => void;
 }
 
-const RadioButton: React.FC<RadioButtonProps> = ({ textOne, textTwo, onRadioSelect }) => {
-    const [select, setSelect] = useState('');
+const RadioButton: React.FC<RadioButtonProps> = ({ textOne, textTwo, onRadioSelect, selectDefault }) => {
+    const [select, setSelect] = useState('first');
 
     const handleSelect = useCallback((check: string) => {
         setSelect(check);        
@@ -18,6 +19,7 @@ const RadioButton: React.FC<RadioButtonProps> = ({ textOne, textTwo, onRadioSele
         <Container>
             <RadioContainer 
                 first
+                selectDefault
                 status={ select === 'first' ? 'checked' : 'unchecked' }
                 onPress={() =>{ handleSelect('first'); onRadioSelect(textOne);}}
             >

@@ -20,3 +20,9 @@ export const SelectStateListAux = styled.View`
 `;
 
 export const StatesReportList = styled.View``;
+
+export const SelectStateListWarningText = styled.Text`
+    color: ${colors.gray};
+    font-size: 12px;
+    padding: 4px 0 8px 8px;
+`;

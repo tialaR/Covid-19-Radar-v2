@@ -14,7 +14,9 @@ import Button from '../../components/Button';
 import Input from '../../components/Input';
 import getValidationErrors from '../../utils/getValidationErros';
 import SelectDate from '../../components/SelectDate';
-import { Container, ContainerRowSelects, SelectStateListAux } from './styles';
+import { Container, ContainerRowSelects, SelectStateListAux, SelectStateListWarningText } from './styles';
+import apiCrowd from '../../service/apiCrowd';
+import { getCurrentDate } from '../../utils/getCurrentDate';
 
 
 interface FormData {
@@ -34,6 +36,11 @@ const Crowd: React.FC = () => {
   const navigation = useNavigation();
 
   const [currentState, setCurrentState] = useState<String>('');
+  const [currentDate, setCurrentDate] = useState(getCurrentDate());
+  const [currentCase, setCurrentCase] = useState(false);
+
+  const [selectStateListWarnning, setSelectStateListWarnning] = useState(false);
+
   const [showInformationModal, setShowInformationModal] = useState(false);
   const [informationFeedback, setInformationFeedback] = useState<
     InformationFeedback
@@ -71,9 +78,20 @@ const Crowd: React.FC = () => {
           abortEarly: false,
         });
 
+        if(currentState === '') {
+          setSelectStateListWarnning(true);
+          return;
+        }
+
         const formData = {
           name: data.name,
+          death: currentCase,
+          state: currentState,
+          date: currentDate,          
         };
+        console.warn(formData);
+
+        await apiCrowd.post('/case', formData);
 
         feedbackTryUpdated({
           status: 'success',
@@ -98,8 +116,13 @@ const Crowd: React.FC = () => {
         });
       }
     },
-    [navigation],
+    [navigation, currentCase, currentState, currentDate, setSelectStateListWarnning],
   );
+
+  const handleChoiceTypeCase = useCallback((caseType: string) => {
+    const caseTypeAux = caseType === 'Óbito' ? true : false;
+    setCurrentCase(caseTypeAux);
+  }, [setCurrentCase]);
 
   return (
     <>
@@ -112,7 +135,7 @@ const Crowd: React.FC = () => {
 
           <SectionTitle
             sectionTitleStyles={{ marginTop: 20 }}
-            title="Registrar caso ou óbito"
+            title="Registrar caso de infeção ou óbito"
           />
 
           <Form
@@ -131,20 +154,25 @@ const Crowd: React.FC = () => {
             <ContainerRowSelects>
               <SelectStateListAux>
                 <SelectStateList
-                  onStatePress={(state: String) => {setCurrentState(state); console.warn(state)}}
+                  onStatePress={(state: String) => setCurrentState(state)}
                   list={reportContext.ufs}
                   firstValue='Estado'
                 />
+                {selectStateListWarnning &&
+                  <SelectStateListWarningText>
+                    Estado obrigatório
+                  </SelectStateListWarningText>
+                }
               </SelectStateListAux>
               <RadioButton 
-                textOne='Caso'
+                textOne='Infeção'
                 textTwo='Óbito'
-                onRadioSelect={(choice: string) => console.warn(choice)}
+                onRadioSelect={(choice: string) => handleChoiceTypeCase(choice)}
               />
             </ContainerRowSelects>
 
             <SelectDate
-              onSelectDate={(date: string) => console.warn(date)}
+              onSelectDate={(date: string) => setCurrentDate(date)}
             />
             
             <Button onPress={() => formRef.current?.submitForm()}>

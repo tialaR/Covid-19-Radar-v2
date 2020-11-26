@@ -14,6 +14,7 @@ import Crowd from '../pages/Crowd';
 import CrowdList from '../pages/CrowdList';
 //import Graphics from '../pages/Graphics';
 import api from '../service/api';
+import apiCrowd from '../service/apiCrowd';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -62,6 +63,7 @@ const TabsRoutes = () => {
 
   useEffect(() => {
     loadReport();
+    loadCrowd();
   }, []);
 
   const loadReport = useCallback(async () => {
@@ -94,6 +96,15 @@ const TabsRoutes = () => {
       }
       setLoading(false);
   }, [setUfs, setCases, setDeaths, setReports, setError, setLoading]);
+
+  const loadCrowd = useCallback(async () => {
+    try {
+      const response = await apiCrowd.get('/case');
+      //console.warn(response);
+    } catch (err) {
+      //console.warn(err.message);
+    }
+  }, []);
 
   return (
     <ReportContext.Provider value={{reports, ufs, cases, deaths, suspects, currentDate}}>
