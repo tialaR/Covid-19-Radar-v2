@@ -93,7 +93,7 @@ export default class SelectStateList extends PureComponent<Props, State> {
             >
               <TouchableWithoutFeedback onPress={this.hideModal}>
                 <ModalBackgroundScreen>
-                  <ModalContainer style={{ top: y, left: x, width: 178 }}>
+                  <ModalContainer style={{ top: y, left: x, width: 161 }}>
                     <FlatList
                       data={list}
                       style={{ flex: 1 }}

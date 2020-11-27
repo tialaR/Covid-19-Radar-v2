@@ -11,10 +11,13 @@ interface StateReport {
     datetime: string;
 }
 
+
 interface StateReportCrowd {
     state: string;
+    UF: string;
+    cases: number;
     death: number;
-}
+  }
 
 interface ContextReport {
     reports: Array<StateReport>;

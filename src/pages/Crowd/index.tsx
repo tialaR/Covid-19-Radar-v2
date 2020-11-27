@@ -86,10 +86,10 @@ const Crowd: React.FC = () => {
         const formData = {
           name: data.name,
           death: currentCase,
-          state: currentState,
+          UF: currentState,
           date: currentDate,          
         };
-        console.warn(formData);
+        
 
         await apiCrowd.post('/case', formData);
 

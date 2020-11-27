@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container, ContainerContent, Decorator, StateTitleText, LeftTextsContainer, LeftTextsContainerDate, LeftSmallText, RightTextsContainer, LeftContainer, RightContainer, RightSmallText, RightText, LeftText, LeftStateText } from './styles';
+import { formatToDecimal } from '../../utils/formatToDecimalNumber';
 
 interface ReportCardProps {
     uf: string;
@@ -34,15 +35,15 @@ const ReportCard: React.FC<ReportCardProps> = ({ uf, state, cases, deaths, suspe
                 <RightContainer>
                     <RightTextsContainer>
                         <RightSmallText>Casos:</RightSmallText>
-                        <RightText>{cases}</RightText>
+                        <RightText>{formatToDecimal(cases)}</RightText>
                     </RightTextsContainer>
                     <RightTextsContainer>
                         <RightSmallText>Óbtos:</RightSmallText>
-                        <RightText>{deaths}</RightText>
+                        <RightText>{formatToDecimal(deaths)}</RightText>
                     </RightTextsContainer>
                     <RightTextsContainer last>
                         <RightSmallText>Suspeitas:</RightSmallText>
-                        <RightText>{suspects}</RightText>
+                        <RightText>{formatToDecimal(suspects)}</RightText>
                     </RightTextsContainer>
                 </RightContainer>
             </ContainerContent>

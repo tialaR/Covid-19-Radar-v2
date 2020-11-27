@@ -1,27 +1,30 @@
 import React from 'react';
-import { Container, ContainerContent, Decorator, StateTitleText, RightTextsContainer, LeftContainer, RightContainer, RightSmallText, RightText } from './styles';
+import { Container, ContainerContent, LeftStateText, StateTitleText, RightTextsContainer, LeftContainer, RightContainer, RightSmallText, RightText } from './styles';
+import { formatToDecimal } from '../../utils/formatToDecimalNumber';
 
 interface CrowdCardProps {
     uf: string;
+    state: string;
     cases: number;
     deaths: number;
 }
 
-const CrowdCard: React.FC<CrowdCardProps> = ({ uf, cases, deaths }) => {
+const CrowdCard: React.FC<CrowdCardProps> = ({ uf, state, cases, deaths }) => {
     return(
         <Container>
             <ContainerContent>
                 <LeftContainer>
                     <StateTitleText>{uf}</StateTitleText>
+                    <LeftStateText>Estado: {state}</LeftStateText>
                 </LeftContainer>
                 <RightContainer>
                     <RightTextsContainer>
                         <RightSmallText>Casos:</RightSmallText>
-                        <RightText>{cases}</RightText>
+                        <RightText>{formatToDecimal(cases)}</RightText>
                     </RightTextsContainer>
                     <RightTextsContainer last>
                         <RightSmallText>Óbtos:</RightSmallText>
-                        <RightText>{deaths}</RightText>
+                        <RightText>{formatToDecimal(deaths)}</RightText>
                     </RightTextsContainer>
                 </RightContainer>
             </ContainerContent>

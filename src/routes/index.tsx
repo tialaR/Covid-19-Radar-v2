@@ -36,6 +36,8 @@ interface StateReport {
 
 interface StateReportCrowd {
   state: string;
+  UF: string;
+  cases: number;
   death: number;
 }
 
@@ -79,6 +81,7 @@ const TabsRoutes = () => {
 
       try {
         const response = await api.get('report/v1'); 
+
         loadCrowd();
 
         let ufsAux: Array<String> = [];
@@ -109,6 +112,7 @@ const TabsRoutes = () => {
     try {
       const response = await apiCrowd.get('/case');
       setReportsCrowd(response.data);
+      console.warn(response);
     } catch (err) {
       console.warn(err.message);
     }

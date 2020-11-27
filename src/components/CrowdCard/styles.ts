@@ -21,6 +21,12 @@ export const ContainerContent = styled.View`
     flex: 1;
 `;
 
+export const LeftStateText = styled.Text`
+    font-size: 10px;
+    color: ${colors.white};
+    padding-bottom: 12px;
+`;
+
 export const Decorator = styled.View`
   background-color: ${colors.white};
   width: 8px;

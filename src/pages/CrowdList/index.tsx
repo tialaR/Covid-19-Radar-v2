@@ -4,11 +4,12 @@ import { ReportContext } from '../../ReportContext';
 import { Container, StatesReportList } from './styles';
 import SectionTitle from '../../components/SectionTitle';
 
-export interface StateReport {
-    uf: string;
+export interface StateReportCrowd {
+    state: string;
+    UF: string;
     cases: number;
-    deaths: number;
-}
+    death: number;
+  }
 
 const CrowdList: React.FC = () => {
     const reportContext = useContext(ReportContext);
@@ -16,8 +17,8 @@ const CrowdList: React.FC = () => {
     return(
         <Container>
             <StatesReportList
-                data={reportContext.reports}
-                keyExtractor={stateReport => String(stateReport.uf)}
+                data={reportContext.reportsCrowd}
+                keyExtractor={stateReport => String(stateReport.state)}
                 ListHeaderComponent={(
                     <SectionTitle
                       title={"Lista dos estados do crowd"}
@@ -26,9 +27,10 @@ const CrowdList: React.FC = () => {
                 )}
                 renderItem={({ item: stateReport }) => (
                     <CrowdCard 
-                        uf={stateReport.uf}
+                        uf={stateReport.UF}
+                        state={stateReport.state}
                         cases={stateReport.cases}
-                        deaths={stateReport.deaths}
+                        deaths={stateReport.death}
                     />
                 )}
             />
